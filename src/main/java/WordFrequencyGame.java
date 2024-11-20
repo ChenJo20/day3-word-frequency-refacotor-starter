@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
 
@@ -19,9 +20,9 @@ public class WordFrequencyGame {
 
                 wordFrequencies = getWordFrequencies(wordFrequencies);
 
-                StringJoiner joiner = new StringJoiner(LINE_BREAK);
-                wordFrequencies.forEach(wordFrequency -> joiner.add(wordFrequency.getWord() + " " + wordFrequency.getWordCount()));
-                return joiner.toString();
+                return wordFrequencies.stream()
+                        .map(wordFrequency -> wordFrequency.getWord() + " " + wordFrequency.getWordCount())
+                        .collect(Collectors.joining(LINE_BREAK));
             } catch (Exception e) {
                 return "Calculate Error";
             }
