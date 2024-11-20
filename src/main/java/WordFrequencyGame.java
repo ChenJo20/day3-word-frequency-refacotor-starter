@@ -18,11 +18,8 @@ public class WordFrequencyGame {
                 //split the input string with 1 to n pieces of spaces
                 String[] words = sentence.split(SPLIT_PATTERN);
 
-                List<WordFrequency> wordFrequencies = new ArrayList<>();
-                for (String word : words) {
-                    WordFrequency wordFrequency = new WordFrequency(word, 1);
-                    wordFrequencies.add(wordFrequency);
-                }
+                List<WordFrequency> wordFrequencies = Arrays.stream(words).map(word -> new WordFrequency(word, 1)).toList();
+
                 //get the map for the next step of sizing the same word
                 Map<String, List<WordFrequency>> wordToWordfrequency = getWordFrequencyMap(wordFrequencies);
                 List<WordFrequency> wordFrequencyList = new ArrayList<>();
@@ -32,11 +29,9 @@ public class WordFrequencyGame {
                 }
                 wordFrequencies = wordFrequencyList;
                 wordFrequencies.sort((word, nextWord) -> nextWord.getWordCount() - word.getWordCount());
+
                 StringJoiner joiner = new StringJoiner(LINE_BREAK);
-                for (WordFrequency w : wordFrequencies) {
-                    String s = w.getWord() + " " + w.getWordCount();
-                    joiner.add(s);
-                }
+                wordFrequencies.forEach(wordFrequency -> joiner.add(wordFrequency.getWord() + " " + wordFrequency.getWordCount()));
                 return joiner.toString();
             } catch (Exception e) {
                 return "Calculate Error";
@@ -46,8 +41,7 @@ public class WordFrequencyGame {
 
     private Map<String, List<WordFrequency>> getWordFrequencyMap(List<WordFrequency> wordFrequencies) {
         Map<String, List<WordFrequency>> wordFrequencyMap = new HashMap<>();
-        for (WordFrequency wordFrequency : wordFrequencies) {
-//       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
+        wordFrequencies.forEach(wordFrequency -> {
             if (!wordFrequencyMap.containsKey(wordFrequency.getWord())) {
                 ArrayList frequencies = new ArrayList<>();
                 frequencies.add(wordFrequency);
@@ -55,7 +49,8 @@ public class WordFrequencyGame {
             } else {
                 wordFrequencyMap.get(wordFrequency.getWord()).add(wordFrequency);
             }
-        }
+        });
+//       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
         return wordFrequencyMap;
     }
 
