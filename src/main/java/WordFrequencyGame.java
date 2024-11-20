@@ -10,18 +10,14 @@ public class WordFrequencyGame {
     public static final String LINE_BREAK = "\n";
 
     public String getWordFrequency(String sentence) {
-        if (sentence.split(SPLIT_PATTERN).length == 1) {
-            return sentence + " 1";
-        } else {
-            try {
-                List<WordFrequency> wordFrequencies = getInitialWordFrequencies(sentence);
+        try {
+            List<WordFrequency> wordFrequencies = getInitialWordFrequencies(sentence);
 
-                wordFrequencies = getWordFrequencies(wordFrequencies);
+            wordFrequencies = getWordFrequencies(wordFrequencies);
 
-                return composeResult(wordFrequencies);
-            } catch (Exception e) {
-                return "Calculate Error";
-            }
+            return composeResult(wordFrequencies);
+        } catch (Exception e) {
+            return "Calculate Error";
         }
     }
 
