@@ -24,7 +24,7 @@ public class WordFrequencyGame {
 
     private static String composeResult(List<WordFrequency> wordFrequencies) {
         return wordFrequencies.stream()
-                .map(wordFrequency -> wordFrequency.getWord() + " " + wordFrequency.getWordCount())
+                .map(wordFrequency -> String.format("%s %d", wordFrequency.getWord(), wordFrequency.getWordCount()))
                 .collect(Collectors.joining(LINE_BREAK));
     }
 
