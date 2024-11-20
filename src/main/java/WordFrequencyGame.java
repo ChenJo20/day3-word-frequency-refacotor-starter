@@ -1,17 +1,23 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
 public class WordFrequencyGame {
+
+    public static final String SPLIT_PATTERN = "\\s+";
+    public static final String LINE_BREAK = "\n";
+
     public String getWordFrequency(String sentence) {
-        if (sentence.split("\\s+").length == 1) {
+        if (sentence.split(SPLIT_PATTERN).length == 1) {
             return sentence + " 1";
         } else {
             try {
                 //split the input string with 1 to n pieces of spaces
-                String[] words = sentence.split("\\s+");
+                String[] words = sentence.split(SPLIT_PATTERN);
+
                 List<WordFrequency> wordFrequencies = new ArrayList<>();
                 for (String word : words) {
                     WordFrequency wordFrequency = new WordFrequency(word, 1);
@@ -26,7 +32,7 @@ public class WordFrequencyGame {
                 }
                 wordFrequencies = wordFrequencyList;
                 wordFrequencies.sort((word, nextWord) -> nextWord.getWordCount() - word.getWordCount());
-                StringJoiner joiner = new StringJoiner("\n");
+                StringJoiner joiner = new StringJoiner(LINE_BREAK);
                 for (WordFrequency w : wordFrequencies) {
                     String s = w.getWord() + " " + w.getWordCount();
                     joiner.add(s);
