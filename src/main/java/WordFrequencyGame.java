@@ -17,15 +17,7 @@ public class WordFrequencyGame {
             try {
                 List<WordFrequency> wordFrequencies = getInitialWordFrequencies(sentence);
 
-                //get the map for the next step of sizing the same word
-                Map<String, List<WordFrequency>> wordToWordfrequency = getWordFrequencyMap(wordFrequencies);
-                List<WordFrequency> wordFrequencyList = new ArrayList<>();
-                for (Map.Entry<String, List<WordFrequency>> entry : wordToWordfrequency.entrySet()) {
-                    WordFrequency wordFrequency = new WordFrequency(entry.getKey(), entry.getValue().size());
-                    wordFrequencyList.add(wordFrequency);
-                }
-                wordFrequencies = wordFrequencyList;
-                wordFrequencies.sort((word, nextWord) -> nextWord.getWordCount() - word.getWordCount());
+                wordFrequencies = getWordFrequencies(wordFrequencies);
 
                 StringJoiner joiner = new StringJoiner(LINE_BREAK);
                 wordFrequencies.forEach(wordFrequency -> joiner.add(wordFrequency.getWord() + " " + wordFrequency.getWordCount()));
@@ -34,6 +26,19 @@ public class WordFrequencyGame {
                 return "Calculate Error";
             }
         }
+    }
+
+    private List<WordFrequency> getWordFrequencies(List<WordFrequency> wordFrequencies) {
+        //get the map for the next step of sizing the same word
+        Map<String, List<WordFrequency>> wordToWordfrequency = getWordFrequencyMap(wordFrequencies);
+        List<WordFrequency> wordFrequencyList = new ArrayList<>();
+        for (Map.Entry<String, List<WordFrequency>> entry : wordToWordfrequency.entrySet()) {
+            WordFrequency wordFrequency = new WordFrequency(entry.getKey(), entry.getValue().size());
+            wordFrequencyList.add(wordFrequency);
+        }
+        wordFrequencies = wordFrequencyList;
+        wordFrequencies.sort((word, nextWord) -> nextWord.getWordCount() - word.getWordCount());
+        return wordFrequencies;
     }
 
     private static List<WordFrequency> getInitialWordFrequencies(String sentence) {
