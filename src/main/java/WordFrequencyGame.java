@@ -9,6 +9,7 @@ public class WordFrequencyGame {
     public static final String SPLIT_PATTERN = "\\s+";
     public static final String LINE_BREAK = "\n";
     public static final String CALCULATE_ERROR_MESSAGE = "Calculate Error";
+    public static final String RESULT_FORMATTER = "%s %d";
 
     public String getWordFrequency(String sentence) {
         try {
@@ -24,7 +25,7 @@ public class WordFrequencyGame {
 
     private static String composeResult(List<WordFrequency> wordFrequencies) {
         return wordFrequencies.stream()
-                .map(wordFrequency -> String.format("%s %d", wordFrequency.getWord(), wordFrequency.getWordCount()))
+                .map(wordFrequency -> String.format(RESULT_FORMATTER, wordFrequency.getWord(), wordFrequency.getWordCount()))
                 .collect(Collectors.joining(LINE_BREAK));
     }
 
