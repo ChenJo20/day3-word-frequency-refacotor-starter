@@ -5,16 +5,16 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 public class WordFrequencyGame {
-    public String getResult(String inputStr) {
-        if (inputStr.split("\\s+").length == 1) {
-            return inputStr + " 1";
+    public String getWordFrequency(String sentence) {
+        if (sentence.split("\\s+").length == 1) {
+            return sentence + " 1";
         } else {
             try {
                 //split the input string with 1 to n pieces of spaces
-                String[] arr = inputStr.split("\\s+");
+                String[] words = sentence.split("\\s+");
                 List<Input> inputList = new ArrayList<>();
-                for (String s : arr) {
-                    Input input = new Input(s, 1);
+                for (String word : words) {
+                    Input input = new Input(word, 1);
                     inputList.add(input);
                 }
                 //get the map for the next step of sizing the same word
