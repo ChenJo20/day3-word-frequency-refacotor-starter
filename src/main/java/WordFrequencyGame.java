@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.StringJoiner;
 
 public class WordFrequencyGame {
 
@@ -18,16 +18,11 @@ public class WordFrequencyGame {
                 //split the input string with 1 to n pieces of spaces
                 String[] words = sentence.split(SPLIT_PATTERN);
 
-                List<WordFrequency> wordFrequencies = Arrays.stream(words)
-                        .map(word -> new WordFrequency(word, 1)).toList();
+                List<WordFrequency> wordFrequencies = Arrays.stream(words).map(word -> new WordFrequency(word, 1)).toList();
 
                 //get the map for the next step of sizing the same word
                 Map<String, List<WordFrequency>> wordToWordfrequency = getWordFrequencyMap(wordFrequencies);
-
-                List<WordFrequency> wordFrequencyList = wordToWordfrequency.entrySet().stream()
-                        .map(entry -> new WordFrequency(entry.getKey(), entry.getValue().size()))
-                        .toList();
-
+                List<WordFrequency> wordFrequencyList = new ArrayList<>();
                 for (Map.Entry<String, List<WordFrequency>> entry : wordToWordfrequency.entrySet()) {
                     WordFrequency wordFrequency = new WordFrequency(entry.getKey(), entry.getValue().size());
                     wordFrequencyList.add(wordFrequency);
@@ -35,10 +30,9 @@ public class WordFrequencyGame {
                 wordFrequencies = wordFrequencyList;
                 wordFrequencies.sort((word, nextWord) -> nextWord.getWordCount() - word.getWordCount());
 
-
-                return wordFrequencies.stream()
-                        .map(wordFrequency -> wordFrequency.getWord() + " " + wordFrequency.getWordCount())
-                        .collect(Collectors.joining(LINE_BREAK));
+                StringJoiner joiner = new StringJoiner(LINE_BREAK);
+                wordFrequencies.forEach(wordFrequency -> joiner.add(wordFrequency.getWord() + " " + wordFrequency.getWordCount()));
+                return joiner.toString();
             } catch (Exception e) {
                 return "Calculate Error";
             }
