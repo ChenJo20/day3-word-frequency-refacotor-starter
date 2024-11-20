@@ -20,13 +20,17 @@ public class WordFrequencyGame {
 
                 wordFrequencies = getWordFrequencies(wordFrequencies);
 
-                return wordFrequencies.stream()
-                        .map(wordFrequency -> wordFrequency.getWord() + " " + wordFrequency.getWordCount())
-                        .collect(Collectors.joining(LINE_BREAK));
+                return composeResult(wordFrequencies);
             } catch (Exception e) {
                 return "Calculate Error";
             }
         }
+    }
+
+    private static String composeResult(List<WordFrequency> wordFrequencies) {
+        return wordFrequencies.stream()
+                .map(wordFrequency -> wordFrequency.getWord() + " " + wordFrequency.getWordCount())
+                .collect(Collectors.joining(LINE_BREAK));
     }
 
     private List<WordFrequency> getWordFrequencies(List<WordFrequency> wordFrequencies) {
@@ -46,8 +50,7 @@ public class WordFrequencyGame {
         //split the input string with 1 to n pieces of spaces
         String[] words = sentence.split(SPLIT_PATTERN);
 
-        List<WordFrequency> wordFrequencies = Arrays.stream(words).map(word -> new WordFrequency(word, 1)).toList();
-        return wordFrequencies;
+        return Arrays.stream(words).map(word -> new WordFrequency(word, 1)).toList();
     }
 
     private Map<String, List<WordFrequency>> getWordFrequencyMap(List<WordFrequency> wordFrequencies) {
