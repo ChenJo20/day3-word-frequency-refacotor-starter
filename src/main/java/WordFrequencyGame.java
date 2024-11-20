@@ -1,5 +1,5 @@
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,14 +34,11 @@ public class WordFrequencyGame {
     private List<WordFrequency> getWordFrequencies(List<WordFrequency> wordFrequencies) {
         //get the map for the next step of sizing the same word
         Map<String, List<WordFrequency>> wordToWordfrequency = getWordFrequencyMap(wordFrequencies);
-        List<WordFrequency> wordFrequencyList = new ArrayList<>();
-        for (Map.Entry<String, List<WordFrequency>> entry : wordToWordfrequency.entrySet()) {
-            WordFrequency wordFrequency = new WordFrequency(entry.getKey(), entry.getValue().size());
-            wordFrequencyList.add(wordFrequency);
-        }
-        wordFrequencies = wordFrequencyList;
-        wordFrequencies.sort((word, nextWord) -> nextWord.getWordCount() - word.getWordCount());
-        return wordFrequencies;
+
+        return wordToWordfrequency.entrySet().stream()
+                .map(entry -> new WordFrequency(entry.getKey(), entry.getValue().size()))
+                .sorted(Comparator.comparing(WordFrequency::getWordCount, Comparator.reverseOrder()))
+                .toList();
     }
 
     private static List<WordFrequency> getInitialWordFrequencies(String sentence) {
