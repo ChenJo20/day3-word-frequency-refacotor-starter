@@ -1,9 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
@@ -54,18 +52,8 @@ public class WordFrequencyGame {
     }
 
     private Map<String, List<WordFrequency>> getWordFrequencyMap(List<WordFrequency> wordFrequencies) {
-        Map<String, List<WordFrequency>> wordFrequencyMap = new HashMap<>();
-        wordFrequencies.forEach(wordFrequency -> {
-            if (!wordFrequencyMap.containsKey(wordFrequency.getWord())) {
-                ArrayList frequencies = new ArrayList<>();
-                frequencies.add(wordFrequency);
-                wordFrequencyMap.put(wordFrequency.getWord(), frequencies);
-            } else {
-                wordFrequencyMap.get(wordFrequency.getWord()).add(wordFrequency);
-            }
-        });
-//       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
-        return wordFrequencyMap;
+        return wordFrequencies.stream()
+                .collect(Collectors.groupingBy(WordFrequency::getWord));
     }
 
 
